@@ -1,0 +1,16 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Effet lorsqu'on appuie sur le bouton -->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="12dp"/>
+            <padding android:left="4dp" android:top="4dp" android:right="4dp" android:bottom="4dp"/>
+        </shape>
+    </item>
+    <!-- État normal du bouton -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="12dp"/>
+            <padding android:left="4dp" android:top="4dp" android:right="4dp" android:bottom="4dp"/>
+        </shape>
+    </item>
+</selector>

@@ -8,7 +8,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class HoraireAdapter extends RecyclerView.Adapter<HoraireAdapter.ViewHolder> {
 
@@ -28,9 +33,34 @@ public class HoraireAdapter extends RecyclerView.Adapter<HoraireAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         HorairesTrain horaire = horaires.get(position);
-        holder.tvHeureDepart.setText("Départ: " + horaire.getHeureDepart());
-        holder.tvHeureArrivee.setText("Arrivée: " + horaire.getHeureArrivee());
+
+        holder.tvHeureDepart.setText(horaire.getHeureDepart());
+        holder.tvHeureArrivee.setText(horaire.getHeureArrivee());
+
+        // 🔹 Calcul automatique de la durée en minutes
+        int duree = calculerDuree(horaire.getHeureDepart(), horaire.getHeureArrivee());
+        holder.tvDuree.setText(duree + " min");
     }
+
+
+    private int calculerDuree(String heureDepart, String heureArrivee) {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+
+        try {
+            Date depart = sdf.parse(heureDepart);
+            Date arrivee = sdf.parse(heureArrivee);
+
+            if (depart != null && arrivee != null) {
+                long difference = arrivee.getTime() - depart.getTime();
+                return (int) TimeUnit.MILLISECONDS.toMinutes(difference);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0; // Valeur par défaut si une erreur survient
+    }
+
+
 
     @Override
     public int getItemCount() {
@@ -38,12 +68,13 @@ public class HoraireAdapter extends RecyclerView.Adapter<HoraireAdapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvHeureDepart, tvHeureArrivee;
+        TextView tvHeureDepart, tvHeureArrivee, tvDuree;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvHeureDepart = itemView.findViewById(R.id.tvHeureDepart);
             tvHeureArrivee = itemView.findViewById(R.id.tvHeureArrivee);
+            tvDuree = itemView.findViewById(R.id.tvDuree);
         }
     }
 }

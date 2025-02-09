@@ -1,37 +1,185 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:layout_marginStart="10sp"
+    android:layout_marginEnd="10sp"
+    android:background="@color/background_light"
     android:padding="16dp"
     tools:context=".MainActivity">
 
-    <!-- Champ de saisie pour la ville de départ -->
-    <EditText
-        android:id="@+id/etDepart"
+
+
+    <!-- Welcome image -->
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Ville de départ" />
+        android:layout_margin="5dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="16dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toTopOf="@+id/cardForm"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="16dp">
 
-    <!-- Champ de saisie pour la ville d'arrivée -->
-    <EditText
-        android:id="@+id/etArrivee"
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageView"
+            android:layout_width="357dp"
+            android:layout_height="212dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/RoundedImage"
+            app:srcCompat="@drawable/train" />
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- CardView contenant le formulaire -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardForm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Ville d'arrivée" />
+        android:layout_marginBottom="16dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
+        app:cardPreventCornerOverlap="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- Bouton pour rechercher les trains -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Départ / Arrivée -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
+
+                <EditText
+                    android:id="@+id/tvDepart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@+id/layoutButtons"
+                    android:hint="@string/select_depart"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorOnSecondary"
+                    />
+
+                <EditText
+                    android:id="@+id/tvArrivee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvDepart"
+                    android:layout_toStartOf="@+id/layoutButtons"
+                    android:hint="@string/select_arrivee"
+                    android:textColor="@color/colorOnSecondary"
+                    android:textSize="16sp"/>
+
+                <!-- Conteneur pour les boutons Swap et Delete -->
+                <LinearLayout
+                    android:id="@+id/layoutButtons"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:orientation="vertical"
+                    android:layout_marginStart="8dp">
+
+                    <ImageButton
+                        android:id="@+id/btnSwap"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/baseline_swap_vert_24" />
+
+                    <ImageButton
+                        android:id="@+id/btnDeleteAll"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:padding="6dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/baseline_delete_outline_24" />
+                </LinearLayout>
+            </RelativeLayout>
+
+
+
+            <!-- Séparateur
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+                -->
+
+            <!-- Sélection des dates -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="8dp">
+
+                <!-- Bouton Date de Départ -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDateAller"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/select_depart_date"
+                    android:textSize="12sp"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/button_3d"
+                    app:cornerRadius="12dp"
+                    app:elevation="6dp"
+                    android:gravity="center"/>
+
+                <!--
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/darker_gray"/>
+                    -->
+
+                <!-- Bouton Date de Retour -->
+
+                <!-- Bouton pour effacer la date de retour -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDateRetour"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20px"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_3d"
+                    android:gravity="center"
+                    android:text="@string/select_retour_date"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
+                    app:cornerRadius="12dp"
+                    app:elevation="6dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Bouton Rechercher -->
     <Button
         android:id="@+id/btnRechercher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Rechercher" />
-
-    <!-- Liste des horaires sous forme de RecyclerView -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewHoraires"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"/>
-</LinearLayout>
+        android:text="@string/rechercher"
+        android:layout_margin="20px"
+        app:layout_constraintTop_toBottomOf="@id/cardForm"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
