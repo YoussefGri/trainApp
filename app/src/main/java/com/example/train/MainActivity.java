@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialisation des vues
         btnDateAller = findViewById(R.id.btnDateAller);
-        btnDateRetour = findViewById(R.id.btnDateRetour);
+        //btnDateRetour = findViewById(R.id.btnDateRetour);
         btnDeleteAll = findViewById(R.id.btnDeleteAll);
         btnSwap = findViewById(R.id.btnSwap);
         tvDepart = findViewById(R.id.tvDepart);
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         btnDateAller.setOnClickListener(v -> afficherDatePicker(btnDateAller));
 
         // Sélection de la date de retour
-        btnDateRetour.setOnClickListener(v -> afficherDatePicker(btnDateRetour));
+       // btnDateRetour.setOnClickListener(v -> afficherDatePicker(btnDateRetour));
 
         // Bouton Swap : échange les valeurs des champs Départ et Arrivée
         btnSwap.setOnClickListener(v -> swapDestinations());
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
     // Fonction pour lancer ResultActivity avec les données sélectionnées
     private void rechercherTrains() {
         String dateAller = btnDateAller.getText().toString();
-        String dateRetour = btnDateRetour.getText().toString();
+        // String dateRetour = btnDateRetour.getText().toString();
 
         if (dateAller.equals(getString(R.string.select_depart_date))) {
             Toast.makeText(this, "Veuillez sélectionner une date de départ", Toast.LENGTH_SHORT).show();
@@ -107,7 +107,9 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(MainActivity.this, ResultActivity.class);
         intent.putExtra("dateAller", dateAller);
-        intent.putExtra("dateRetour", dateRetour);
+       // intent.putExtra("dateRetour", dateRetour);
+        intent.putExtra("tvDepart", tvDepart.getText().toString());
+        intent.putExtra("tvArrivee", tvArrivee.getText().toString());
         startActivity(intent);
     }
 }

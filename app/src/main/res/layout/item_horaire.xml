@@ -14,7 +14,7 @@
         android:padding="12dp"
         android:gravity="center_vertical">
 
-        <!-- Bloc des horaires -->
+        <!-- Bloc des horaires et des villes -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -22,6 +22,25 @@
             android:orientation="vertical"
             android:paddingEnd="12dp">
 
+            <!-- Villes -->
+            <TextView
+                android:id="@+id/tvVilleDepart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tvVilleArrivee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/> <!-- Espacement avant les horaires -->
+
+            <!-- Horaires -->
             <TextView
                 android:id="@+id/tvHeureDepart"
                 android:layout_width="wrap_content"
@@ -48,7 +67,7 @@
             app:tint="@android:color/black"
             android:layout_gravity="center"/>
 
-        <!-- Bloc de durée -->
+        <!-- Bloc de durée et date -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -78,6 +97,16 @@
                     android:textColor="@android:color/black"
                     android:layout_marginStart="4dp"/>
             </LinearLayout>
+
+            <!-- Date du train -->
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginTop="4dp"
+                android:textStyle="italic"/>
         </LinearLayout>
 
     </LinearLayout>

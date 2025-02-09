@@ -153,7 +153,7 @@
 
                 <!-- Bouton Date de Retour -->
 
-                <!-- Bouton pour effacer la date de retour -->
+                <!-- Bouton pour effacer la date de retour
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnDateRetour"
                     android:layout_width="0dp"
@@ -167,6 +167,7 @@
                     android:textSize="12sp"
                     app:cornerRadius="12dp"
                     app:elevation="6dp" />
+                    -->
 
             </LinearLayout>
         </LinearLayout>

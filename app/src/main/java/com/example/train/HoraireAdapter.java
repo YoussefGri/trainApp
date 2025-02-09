@@ -32,15 +32,18 @@ public class HoraireAdapter extends RecyclerView.Adapter<HoraireAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        HorairesTrain horaire = horaires.get(position);
+        HorairesTrain train = horaires.get(position);
 
-        holder.tvHeureDepart.setText(horaire.getHeureDepart());
-        holder.tvHeureArrivee.setText(horaire.getHeureArrivee());
+        holder.tvHeureDepart.setText(train.getHeureDepart());
+        holder.tvHeureArrivee.setText(train.getHeureArrivee());
+        holder.tvVilleDepart.setText(train.getVilleDepart());
+        holder.tvVilleArrivee.setText(train.getVilleArrivee());
+        holder.tvDate.setText("Date : " + train.getDate());
 
-        // 🔹 Calcul automatique de la durée en minutes
-        int duree = calculerDuree(horaire.getHeureDepart(), horaire.getHeureArrivee());
+        int duree = calculerDuree(train.getHeureDepart(), train.getHeureArrivee());
         holder.tvDuree.setText(duree + " min");
     }
+
 
 
     private int calculerDuree(String heureDepart, String heureArrivee) {
@@ -68,13 +71,16 @@ public class HoraireAdapter extends RecyclerView.Adapter<HoraireAdapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvHeureDepart, tvHeureArrivee, tvDuree;
+        TextView tvHeureDepart, tvHeureArrivee, tvDuree, tvVilleDepart, tvVilleArrivee, tvDate;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvHeureDepart = itemView.findViewById(R.id.tvHeureDepart);
             tvHeureArrivee = itemView.findViewById(R.id.tvHeureArrivee);
             tvDuree = itemView.findViewById(R.id.tvDuree);
+            tvVilleDepart = itemView.findViewById(R.id.tvVilleDepart);
+            tvVilleArrivee = itemView.findViewById(R.id.tvVilleArrivee);
+            tvDate = itemView.findViewById(R.id.tvDate);
         }
     }
 }
