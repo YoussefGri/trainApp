@@ -92,7 +92,7 @@ public class ResultActivity extends AppCompatActivity {
         }
 
         if (listeHoraires.isEmpty()) {
-            Toast.makeText(this, "Aucun train trouvé pour cet itinéraire et cette date. " + dateAller, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.no_train_available, Toast.LENGTH_LONG).show();
         }
 
         adapter = new HoraireAdapter(listeHoraires);

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Train</string>
+    <string name="error_empty_fields">Please fill in all fields</string>
+    <string name="select_depart">Departure location</string>
+    <string name="select_arrivee">Destination</string>
+    <string name="select_depart_date">Departure date</string>
+    <string name="select_retour_date">Return date</string>
+    <string name="rechercher">Search</string>
+    <string name="swap_locations">Swap locations</string>
+    <string name="delete_return_date">Delete return date</string>
+    <string name="train_results">Train results</string>
+    <string name="back_button">Back</string>
+    <string name="retour_formulaire">Back to form</string>
+    <string name="field_reinitialization">Field reinitialization</string>
+    <string name="no_train_available">No trains available</string>
+</resources>

@@ -87,12 +87,12 @@ public class MainActivity extends AppCompatActivity {
 
     // Fonction pour réinitialiser tous les champs (Départ, Arrivée, Dates)
     private void resetFields() {
+
         tvDepart.setText("");
         tvArrivee.setText("");
         btnDateAller.setText(getString(R.string.select_depart_date));
-        btnDateRetour.setText(getString(R.string.select_retour_date));
 
-        Toast.makeText(this, "Champs réinitialisés", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.field_reinitialization, Toast.LENGTH_SHORT).show();
     }
 
     // Fonction pour lancer ResultActivity avec les données sélectionnées

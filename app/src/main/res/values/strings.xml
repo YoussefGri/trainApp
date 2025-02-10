@@ -11,4 +11,6 @@
     <string name="train_results">Résultats des trains</string>
     <string name="back_button">Retour</string>
     <string name="retour_formulaire">Retour au formulaire</string>
+    <string name="field_reinitialization">Réinitialisation des champs</string>
+    <string name="no_train_available">Aucun train disponible</string>
 </resources>
