@@ -1,16 +1,14 @@
 package com.example.train;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
-import android.widget.Toolbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import java.text.SimpleDateFormat;
@@ -19,9 +17,10 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private MaterialButton btnDateAller, btnDateRetour;
+    private MaterialButton btnDateAller, btnSelectTime;
     private ImageButton btnDeleteAll, btnSwap;
     private EditText tvDepart, tvArrivee;
+    private String selectedTime = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialisation des vues
         btnDateAller = findViewById(R.id.btnDateAller);
-        //btnDateRetour = findViewById(R.id.btnDateRetour);
+        btnSelectTime = findViewById(R.id.btnSelectTime);
         btnDeleteAll = findViewById(R.id.btnDeleteAll);
         btnSwap = findViewById(R.id.btnSwap);
         tvDepart = findViewById(R.id.tvDepart);
@@ -39,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         // Sélection de la date de départ
         btnDateAller.setOnClickListener(v -> afficherDatePicker(btnDateAller));
 
-        // Sélection de la date de retour
-       // btnDateRetour.setOnClickListener(v -> afficherDatePicker(btnDateRetour));
+        // Sélection de l'heure de départ
+        btnSelectTime.setOnClickListener(v -> showTimePicker());
 
         // Bouton Swap : échange les valeurs des champs Départ et Arrivée
         btnSwap.setOnClickListener(v -> swapDestinations());
@@ -52,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btnRechercher).setOnClickListener(v -> rechercherTrains());
     }
 
-    // Fonction pour afficher le DatePickerDialog
     private void afficherDatePicker(MaterialButton button) {
         final Calendar calendar = Calendar.getInstance();
         Context context = new ContextThemeWrapper(this, R.style.CustomDatePickerDialog);
@@ -70,8 +68,19 @@ public class MainActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+    private void showTimePicker() {
+        final Calendar calendar = Calendar.getInstance();
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+                (view, hourOfDay, minute) -> {
+                    selectedTime = String.format(Locale.FRANCE, "%02d:%02d", hourOfDay, minute);
+                    btnSelectTime.setText("Départ après : " + selectedTime);
+                },
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                true);
+        timePickerDialog.show();
+    }
 
-    // Fonction pour échanger les valeurs des champs Départ et Arrivée
     private void swapDestinations() {
         String depart = tvDepart.getText().toString();
         String arrivee = tvArrivee.getText().toString();
@@ -85,20 +94,17 @@ public class MainActivity extends AppCompatActivity {
         tvArrivee.setText(depart);
     }
 
-    // Fonction pour réinitialiser tous les champs (Départ, Arrivée, Dates)
     private void resetFields() {
-
         tvDepart.setText("");
         tvArrivee.setText("");
         btnDateAller.setText(getString(R.string.select_depart_date));
-
-        Toast.makeText(this, R.string.field_reinitialization, Toast.LENGTH_SHORT).show();
+        btnSelectTime.setText("Sélectionner l'heure de départ");
+        selectedTime = null;
+        Toast.makeText(this, "Champs réinitialisés", Toast.LENGTH_SHORT).show();
     }
 
-    // Fonction pour lancer ResultActivity avec les données sélectionnées
     private void rechercherTrains() {
         String dateAller = btnDateAller.getText().toString();
-        // String dateRetour = btnDateRetour.getText().toString();
 
         if (dateAller.equals(getString(R.string.select_depart_date))) {
             Toast.makeText(this, "Veuillez sélectionner une date de départ", Toast.LENGTH_SHORT).show();
@@ -107,9 +113,13 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(MainActivity.this, ResultActivity.class);
         intent.putExtra("dateAller", dateAller);
-       // intent.putExtra("dateRetour", dateRetour);
         intent.putExtra("tvDepart", tvDepart.getText().toString());
         intent.putExtra("tvArrivee", tvArrivee.getText().toString());
+
+        if (selectedTime != null) {
+            intent.putExtra("selectedTime", selectedTime);
+        }
+
         startActivity(intent);
     }
 }

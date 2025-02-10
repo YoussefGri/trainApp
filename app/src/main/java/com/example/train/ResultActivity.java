@@ -1,10 +1,8 @@
-
 package com.example.train;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +18,7 @@ public class ResultActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private HoraireAdapter adapter;
     private List<HorairesTrain> listeHoraires;
-    private String depart, arrivee, dateAller;
+    private String depart, arrivee, dateAller, selectedTime;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
     @Override
@@ -32,6 +30,8 @@ public class ResultActivity extends AppCompatActivity {
         depart = getIntent().getStringExtra("tvDepart");
         arrivee = getIntent().getStringExtra("tvArrivee");
         String dateAllerRecu = getIntent().getStringExtra("dateAller");
+        selectedTime = getIntent().getStringExtra("selectedTime"); // Récupération de l'heure filtrée
+
         dateAller = convertirFormatDate(dateAllerRecu);
 
         // Vérification des valeurs nulles
@@ -49,7 +49,7 @@ public class ResultActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewTrains);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Charger les horaires de train
+        // Charger les horaires de train avec filtre horaire
         chargerHoraires();
 
         // Bouton retour
@@ -58,7 +58,7 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     /**
-     * Charge des horaires de train fictifs en fonction des villes et de la date choisie.
+     * Charge des horaires de train fictifs en fonction des villes, de la date et de l'heure choisie.
      */
     private void chargerHoraires() {
         // Base de données fictive des trains
@@ -86,13 +86,16 @@ public class ResultActivity extends AppCompatActivity {
         if (trains.containsKey(trajet)) {
             for (HorairesTrain train : trains.get(trajet)) {
                 if (train.getDate().equals(dateAller)) {
-                    listeHoraires.add(train);
+                    // Appliquer le filtre sur l'heure de départ
+                    if (selectedTime == null || compareHeure(train.getHeureDepart(), selectedTime)) {
+                        listeHoraires.add(train);
+                    }
                 }
             }
         }
 
         if (listeHoraires.isEmpty()) {
-            Toast.makeText(this, R.string.no_train_available, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Aucun train trouvé après " + (selectedTime != null ? selectedTime : "00:00"), Toast.LENGTH_LONG).show();
         }
 
         adapter = new HoraireAdapter(listeHoraires);
@@ -142,73 +145,20 @@ public class ResultActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Compare l'heure d'un train avec l'heure sélectionnée par l'utilisateur.
+     * Retourne `true` si l'heure du train est **postérieure** à l'heure choisie.
+     */
+    private boolean compareHeure(String heureTrain, String heureFiltre) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.FRANCE);
+            Date dateTrain = sdf.parse(heureTrain);
+            Date dateFiltre = sdf.parse(heureFiltre);
 
-
-}
-
-
-
-/*
-
-package com.example.train;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import java.util.ArrayList;
-import java.util.List;
-
-public class ResultActivity extends AppCompatActivity {
-
-    private RecyclerView recyclerView;
-    private HoraireAdapter adapter;
-    private List<HorairesTrain> listeHoraires;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_result);
-
-        // Récupérer les données envoyées
-        String depart = getIntent().getStringExtra("tvDepart");
-        String arrivee = getIntent().getStringExtra("tvArrivee");
-        String dateAller = getIntent().getStringExtra("dateAller");
-        String dateRetour = getIntent().getStringExtra("dateRetour");
-
-        // Afficher les détails de l'itinéraire
-        TextView tvItineraire = findViewById(R.id.tvItineraire);
-        tvItineraire.setText(depart + " → " + arrivee + "\n" + dateAller +
-                (dateRetour.equals(getString(R.string.select_retour_date)) ? "" : "\nRetour : " + dateRetour));
-
-        // Initialisation de la RecyclerView
-        recyclerView = findViewById(R.id.recyclerViewTrains);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // Simuler les horaires de train
-        listeHoraires = new ArrayList<>();
-        listeHoraires.add(new HorairesTrain("08:00", "10:00", depart, arrivee));
-        listeHoraires.add(new HorairesTrain("10:30", "12:30", depart, arrivee));
-        listeHoraires.add(new HorairesTrain("14:00", "16:00", depart, arrivee));
-
-        adapter = new HoraireAdapter(listeHoraires);
-        recyclerView.setAdapter(adapter);
-
-        // Bouton retour
-        ImageView btnRetourForm = findViewById(R.id.btnRetourForm);
-        btnRetourForm.setOnClickListener(v -> {
-            Intent intent = new Intent(ResultActivity.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
-            finish();
-        });
-
+            return dateTrain != null && dateTrain.after(dateFiltre);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
-
- */
