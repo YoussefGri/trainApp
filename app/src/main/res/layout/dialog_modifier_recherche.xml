@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/white">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Modifier la Recherche"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingBottom="10dp"/>
+
+    <!-- Départ -->
+    <EditText
+        android:id="@+id/etDepart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ville de départ"
+        android:textSize="16sp"/>
+
+    <!-- Arrivée -->
+    <EditText
+        android:id="@+id/etArrivee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ville d'arrivée"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"/>
+
+    <!-- Sélection de la date -->
+    <Button
+        android:id="@+id/btnDateAller"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sélectionner une date"
+        android:layout_marginTop="8dp"/>
+
+    <!-- Sélection de l'heure -->
+    <Button
+        android:id="@+id/btnSelectTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sélectionner l'heure"
+        android:layout_marginTop="8dp"/>
+
+    <!-- Bouton Valider -->
+    <Button
+        android:id="@+id/btnValiderModification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Appliquer"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="12dp"/>
+</LinearLayout>

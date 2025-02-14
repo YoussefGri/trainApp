@@ -6,9 +6,10 @@
     android:orientation="vertical"
     android:layout_marginStart="10sp"
     android:layout_marginEnd="10sp"
-    android:background="@color/background_light"
     android:padding="16dp"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/background_light">
+
 
     <!-- Welcome image -->
     <androidx.cardview.widget.CardView
@@ -121,28 +122,28 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnDateAller"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/select_depart_date"
-                    android:textSize="12sp"
-                    android:textColor="@android:color/white"
+                    android:layout_height="38dp"
                     android:background="@drawable/button_3d"
+                    android:gravity="center"
+                    android:text="@string/select_depart_date"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
                     app:cornerRadius="12dp"
-                    app:elevation="6dp"
-                    android:gravity="center"/>
+                    app:elevation="6dp" />
 
                 <!-- Bouton Heure de Départ -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSelectTime"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="38dp"
                     android:layout_marginTop="8dp"
-                    android:text="Sélectionner l'heure de départ"
-                    android:textSize="12sp"
-                    android:textColor="@android:color/white"
                     android:background="@drawable/button_3d"
+                    android:gravity="center"
+                    android:text="Sélectionner l'heure de départ"
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp"
                     app:cornerRadius="12dp"
-                    app:elevation="6dp"
-                    android:gravity="center"/>
+                    app:elevation="6dp" />
 
             </LinearLayout>
         </LinearLayout>
