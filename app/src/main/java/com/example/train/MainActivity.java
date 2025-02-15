@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         TimePickerDialog timePickerDialog = new TimePickerDialog(this,
                 (view, hourOfDay, minute) -> {
                     selectedTime = String.format(Locale.FRANCE, "%02d:%02d", hourOfDay, minute);
-                    btnSelectTime.setText("Départ après : " + selectedTime);
+                    btnSelectTime.setText(getString(R.string.departure_after) +" : " + selectedTime);
                 },
                 calendar.get(Calendar.HOUR_OF_DAY),
                 calendar.get(Calendar.MINUTE),
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         String arrivee = tvArrivee.getText().toString();
 
         if (depart.isEmpty() && arrivee.isEmpty()) {
-            Toast.makeText(this, "Les champs sont vides, rien à échanger", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.fields_already_empty), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -98,16 +98,16 @@ public class MainActivity extends AppCompatActivity {
         tvDepart.setText("");
         tvArrivee.setText("");
         btnDateAller.setText(getString(R.string.select_depart_date));
-        btnSelectTime.setText("Sélectionner l'heure de départ");
+        btnSelectTime.setText(R.string.select_departure_time);
         selectedTime = null;
-        Toast.makeText(this, "Champs réinitialisés", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,getString(R.string.field_reinitialization), Toast.LENGTH_SHORT).show();
     }
 
     private void rechercherTrains() {
         String dateAller = btnDateAller.getText().toString();
 
         if (dateAller.equals(getString(R.string.select_depart_date))) {
-            Toast.makeText(this, "Veuillez sélectionner une date de départ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.select_departure_date), Toast.LENGTH_SHORT).show();
             return;
         }
 

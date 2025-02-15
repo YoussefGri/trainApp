@@ -13,4 +13,10 @@
     <string name="retour_formulaire">Retour au formulaire</string>
     <string name="field_reinitialization">Réinitialisation des champs</string>
     <string name="no_train_available">Aucun train disponible</string>
+    <string name="fields_already_empty">Les champs sont vides</string>
+    <string name="departure_after">Départ après</string>
+    <string name="select_departure_time">Selectionnez l\'heure de départ</string>
+    <string name="select_departure_date">Selectionnez la date de départ</string>
+    <string name="update_researche">Modifier la recherche</string>
+    <string name="apply_changes">Appliquer</string>
 </resources>

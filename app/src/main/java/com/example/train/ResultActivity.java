@@ -11,6 +11,8 @@ import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
+
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,7 +24,13 @@ public class ResultActivity extends AppCompatActivity {
     private HoraireAdapter adapter;
     private List<HorairesTrain> listeHoraires;
     private String depart, arrivee, dateAller, selectedTime;
-    private TextView tvItineraire;  // Pour afficher le récapitulatif
+
+    Map<String, List<HorairesTrain>> trains = new HashMap<>();
+
+
+    private ViewPager2 viewPagerDates;
+
+    //private TextView tvItineraire;  // Pour afficher le récapitulatif
     private static final String TAG = "ResultActivity";
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
@@ -46,30 +54,41 @@ public class ResultActivity extends AppCompatActivity {
             return;
         }
 
-        // Affichage du récapitulatif de la recherche
-        tvItineraire = findViewById(R.id.tvItineraire);
-        mettreAJourRecapitulatif();
+        // Initialisation des vues
+       // tvItineraire = findViewById(R.id.tvItineraire);
 
-        // Initialisation de la RecyclerView
+        viewPagerDates = findViewById(R.id.viewPagerDates);
+
+        viewPagerDates.setPageTransformer((page, position) -> {
+            float scaleFactor = Math.max(0.85f, 1 - Math.abs(position));
+            float alphaFactor = Math.max(0.5f, 1 - Math.abs(position));
+
+            page.setScaleX(scaleFactor);
+            page.setScaleY(scaleFactor);
+            page.setAlpha(alphaFactor);
+        });
+
+        mettreAJourRecapitulatif();
         recyclerView = findViewById(R.id.recyclerViewTrains);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        chargerHoraires();  // Charge les horaires pour la date initiale
+        chargerDatesDisponibles();  // Charge les dates pour le carrousel
 
-        // Charger les horaires de train avec filtre d'heure
-        chargerHoraires();
 
-        // Bouton pour ouvrir le popup de modification
+
+        // Bouton Modifier le trajet
         ImageButton btnModifierRecherche = findViewById(R.id.btnModifierRecherche);
         btnModifierRecherche.setOnClickListener(v -> afficherPopupModification());
 
-        // Bouton retour
+        // Bouton Retour
         ImageView btnRetourForm = findViewById(R.id.btnRetourForm);
         btnRetourForm.setOnClickListener(v -> retournerAuFormulaire());
     }
 
     private void mettreAJourRecapitulatif() {
-        tvItineraire.setText(String.format("%s → %s\n%s%s",
-                depart, arrivee, dateAller,
-                selectedTime != null ? "\nAprès " + selectedTime : ""));
+//        tvItineraire.setText(String.format("%s → %s\n%s%s",
+//                depart, arrivee, dateAller,
+//                selectedTime != null ? "\nAprès " + selectedTime : ""));
     }
 
     private void afficherPopupModification() {
@@ -121,15 +140,17 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     private void chargerHoraires() {
-        Map<String, List<HorairesTrain>> trains = new HashMap<>();
         trains.put("Paris → Lyon", Arrays.asList(
                 new HorairesTrain("06:30", "09:00", "Paris", "Lyon", "15/02/2025"),
                 new HorairesTrain("10:00", "12:30", "Paris", "Lyon", "15/02/2025"),
                 new HorairesTrain("15:00", "17:30", "Paris", "Lyon", "15/02/2025"),
                 new HorairesTrain("18:00", "20:30", "Paris", "Lyon", "15/02/2025"),
                 new HorairesTrain("21:00", "23:30", "Paris", "Lyon", "15/02/2025"),
-                new HorairesTrain("23:59", "02:30", "Paris", "Lyon", "15/02/2025")
-        ));
+                new HorairesTrain("23:59", "02:30", "Paris", "Lyon", "15/02/2025"),
+                new HorairesTrain("10:00", "12:30", "Paris", "Lyon", "16/02/2025"),
+                new HorairesTrain("15:00", "17:30", "Paris", "Lyon", "16/02/2025")
+
+                ));
         trains.put("Lyon → Marseille", Arrays.asList(
                 new HorairesTrain("07:00", "09:30", "Lyon", "Marseille", "15/02/2025"),
                 new HorairesTrain("13:30", "16:00", "Lyon", "Marseille", "15/02/2025")
@@ -189,6 +210,40 @@ public class ResultActivity extends AppCompatActivity {
                 calendar.get(Calendar.MINUTE),
                 true);
         timePickerDialog.show();
+    }
+
+
+    /**
+     * Charge les 7 prochaines dates et les affiche dans le carrousel ViewPager2
+     */
+    private void chargerDatesDisponibles() {
+        List<String> datesDisponibles = new ArrayList<>();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
+
+        // Vérifier quelles dates ont au moins un train disponible
+        String trajet = depart + " → " + arrivee;
+        if (trains.containsKey(trajet)) {
+            for (HorairesTrain train : trains.get(trajet)) {
+                if (!datesDisponibles.contains(train.getDate())) {
+                    datesDisponibles.add(train.getDate()); // Ajouter uniquement les dates avec des trains
+                }
+            }
+        }
+
+        // Si aucune date trouvée, afficher un message
+        if (datesDisponibles.isEmpty()) {
+            Toast.makeText(this, "Aucune date disponible pour ce trajet.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        // Création et association de l'adapter
+        DatePagerAdapter adapter = new DatePagerAdapter(datesDisponibles, date -> {
+            dateAller = date;  // Met à jour la date sélectionnée
+            mettreAJourRecapitulatif();
+            chargerHoraires();
+        });
+
+        viewPagerDates.setAdapter(adapter);
     }
 
     /**

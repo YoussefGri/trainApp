@@ -14,4 +14,10 @@
     <string name="retour_formulaire">Back to form</string>
     <string name="field_reinitialization">Field reinitialization</string>
     <string name="no_train_available">No trains available</string>
+    <string name="fields_already_empty">Fields are already empty</string>
+    <string name="departure_after">Departure after</string>
+    <string name="select_departure_time">Select departure time</string>
+    <string name="select_departure_date">Select departure date</string>
+    <string name="update_researche">Update research</string>
+    <string name="apply_changes">Apply changes</string>
 </resources>

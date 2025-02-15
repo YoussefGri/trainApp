@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Modifier la Recherche"
+        android:text="@string/update_researche"
         android:textSize="18sp"
         android:textStyle="bold"
         android:gravity="center"
@@ -19,7 +19,7 @@
         android:id="@+id/etDepart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Ville de départ"
+        android:hint="@string/select_depart"
         android:textSize="16sp"/>
 
     <!-- Arrivée -->
@@ -27,7 +27,7 @@
         android:id="@+id/etArrivee"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Ville d'arrivée"
+        android:hint="@string/select_arrivee"
         android:textSize="16sp"
         android:layout_marginTop="8dp"/>
 
@@ -36,7 +36,7 @@
         android:id="@+id/btnDateAller"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sélectionner une date"
+        android:text="@string/select_departure_date"
         android:layout_marginTop="8dp"/>
 
     <!-- Sélection de l'heure -->
@@ -44,7 +44,7 @@
         android:id="@+id/btnSelectTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sélectionner l'heure"
+        android:text="@string/select_departure_time"
         android:layout_marginTop="8dp"/>
 
     <!-- Bouton Valider -->
@@ -52,7 +52,7 @@
         android:id="@+id/btnValiderModification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Appliquer"
+        android:text="@string/apply_changes"
         android:backgroundTint="@color/colorPrimary"
         android:textColor="@android:color/white"
         android:layout_marginTop="12dp"/>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -31,75 +32,57 @@
             android:textColor="@android:color/black"/>
     </RelativeLayout>
 
-    <!-- CardView pour afficher l'itinéraire sélectionné -->
+    <!-- Conteneur du carrousel des dates -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="140dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
         app:cardCornerRadius="16dp"
-        android:elevation="8dp"
-        android:padding="16dp"
+        app:cardElevation="8dp"
         app:cardBackgroundColor="@android:color/white"
-        android:layout_gravity="center">
+        android:clipChildren="false"
+        android:clipToPadding="false">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
 
-            <!-- Bloc Trajet -->
-            <LinearLayout
+            <!-- Carrousel des prochaines dates disponibles -->
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPagerDates"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:padding="10dp"/>
+
+            <!-- Indicateur de position (dots) -->
+            <me.relex.circleindicator.CircleIndicator3
+                android:id="@+id/dotsIndicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="6dp"
-                    android:src="@drawable/baseline_location_on_24"
-                    app:tint="@color/colorPrimary" />
-
-                <TextView
-                    android:id="@+id/tvItineraire"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <ImageButton
-                android:id="@+id/btnModifierRecherche"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/baseline_edit_24"
-                android:backgroundTint="@color/colorBackground"
-                android:layout_marginTop="8dp"
-                android:padding="8dp"
-                android:layout_gravity="center"/>
-
-
-            </LinearLayout>
-
-            <!-- Date -->
-            <TextView
-                android:id="@+id/tvDateTrajet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="6dp"
-                android:gravity="center"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"/>
         </LinearLayout>
-
 
     </androidx.cardview.widget.CardView>
 
+
+
+    <!-- Bouton pour modifier le trajet -->
+    <ImageButton
+        android:id="@+id/btnModifierRecherche"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:src="@drawable/baseline_edit_24"
+        android:background="@drawable/rounded_button"
+        android:elevation="4dp"
+        android:layout_gravity="center_horizontal"
+        android:padding="12dp"
+        android:layout_marginTop="6dp"/>
 
     <!-- Ligne de séparation -->
     <View
@@ -116,4 +99,5 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:paddingTop="16dp"/>
+
 </LinearLayout>
